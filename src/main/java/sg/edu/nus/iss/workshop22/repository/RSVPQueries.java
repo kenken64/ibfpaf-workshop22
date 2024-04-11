@@ -6,9 +6,18 @@ public interface RSVPQueries {
             select count(*) from rsvp;
             """;
 
+    public static final String COUNT_RSVP_BY_EMAIL= """
+        select count(*) as count from rsvp where email= ?;
+        """;
+
+    
     public static final String ALL_RSVP = """
             select * from rsvp
             """;
+
+    public static final String GET_RSVP_BY_NAME = """
+        select * from rsvp where full_name like ?
+        """;
 
     public static final String INSERT_RSVP = """
             insert into rsvp (full_name, email, phone, 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sg.edu.nus.iss.workshop22.model.RSVP;
@@ -40,15 +41,23 @@ public class RSVPRestController {
         return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
     }
 
+    @GetMapping(value="/name")
+    public ResponseEntity<List<RSVP>> getRSVPByName(@RequestParam String q){
+        List<RSVP> result = new LinkedList<RSVP>();
+        
+        result = svc.findRSVPbyName(q);
+        
+        if(result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        return new ResponseEntity<List<RSVP>>(result, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Boolean> saveRSVP(@RequestBody RSVP rsvp){
         Boolean status = false;
 
-        System.out.println(rsvp.getFullName());
-        System.out.println(rsvp.getEmail());
-        System.out.println(rsvp.getPhone());
-        System.out.println(rsvp.getConfirmationDate());
-        System.out.println(rsvp.getComment());
         status = svc.saveRSVP(rsvp);
         if(status){
             return ResponseEntity.status(HttpStatus.CREATED).body(status);

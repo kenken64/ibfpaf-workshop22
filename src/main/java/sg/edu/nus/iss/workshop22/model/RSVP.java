@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.workshop22.model;
 
+
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
